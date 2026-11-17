@@ -46,7 +46,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
 .match-shell{width:min(100%,920px);margin:0 auto;display:flex;flex-direction:column;gap:12px}
 #view:has(.match-shell){display:flex;flex-direction:column;justify-content:center}.match-kicker{display:flex;justify-content:space-between;align-items:center;color:#a7bad3;font-size:12px;font-weight:850;letter-spacing:1.2px}.scoreboard{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,.65fr) minmax(0,1fr);align-items:center;gap:10px;padding:clamp(17px,3vh,28px) clamp(12px,3vw,30px);border:1px solid #3a5273;border-radius:20px;background:radial-gradient(ellipse at 50% 0,#243d5e 0,#14243a 45%,#0b1525 100%);box-shadow:0 18px 50px #0005;min-height:190px}
 .team-side{min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px}.team-side strong{font-size:clamp(16px,2.2vw,23px);font-weight:900;overflow-wrap:anywhere}.team-crest{width:82px;height:58px;display:grid;place-items:center}.match-flag{width:72px;height:49px;border-radius:7px;box-shadow:0 5px 16px #0008}.score-center{text-align:center}.bigscore{font-size:clamp(34px,6vw,57px);font-weight:1000;letter-spacing:1px;color:#f6cc78;white-space:nowrap}.minute{font-size:13px;color:#a9c4e4;letter-spacing:1.5px;margin-top:5px;font-weight:800}
-.team-highlights{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;min-height:23px;margin-top:3px}.highlight-token{font-size:12px;font-weight:850;padding:4px 7px;border-radius:7px;background:#091424;border:1px solid #354a66;color:#f5d58f;animation:highlightPop .24s ease both}.pitch-wrap{position:relative;min-height:110px}.pitch{height:108px;margin:0;position:relative;overflow:hidden;border:3px solid #427452;border-radius:14px;background:repeating-linear-gradient(90deg,#174a31 0,#174a31 10%,#1b5537 10%,#1b5537 20%);display:grid;place-items:center}.pitch:before{content:none}.pitch:after{content:none}.pitch-circle{position:absolute;inset:10px 39%;border:1px solid #ffffff4b;border-radius:50%}.pitch-line{position:absolute;top:0;bottom:0;left:50%;border-left:1px solid #ffffff4b}.event{z-index:1;font-size:22px;font-weight:1000;text-shadow:0 2px 8px #000;padding:8px 15px}.match-actions{display:flex;justify-content:center}.match-actions button{min-width:min(100%,260px);font-size:15px;padding:15px 24px;letter-spacing:.7px}
+.team-highlights{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;min-height:23px;margin-top:3px}.penalty-mark{display:inline-grid;place-items:center;min-width:25px;height:25px;padding:0 5px;border-radius:7px;font-size:17px;font-weight:1000;line-height:1;background:#102039;border:1px solid #425a78;animation:highlightPop .24s ease both}.penalty-mark.scored{color:#ffe09a;border-color:#b88b43;background:#3a2d18}.penalty-mark.missed{color:#ff9ca5;border-color:#9c4b58;background:#351b26}.highlight-token{font-size:12px;font-weight:850;padding:4px 7px;border-radius:7px;background:#091424;border:1px solid #354a66;color:#f5d58f;animation:highlightPop .24s ease both}.pitch-wrap{position:relative;min-height:110px}.pitch{height:108px;margin:0;position:relative;overflow:hidden;border:3px solid #427452;border-radius:14px;background:repeating-linear-gradient(90deg,#174a31 0,#174a31 10%,#1b5537 10%,#1b5537 20%);display:grid;place-items:center}.pitch:before{content:none}.pitch:after{content:none}.pitch-circle{position:absolute;inset:10px 39%;border:1px solid #ffffff4b;border-radius:50%}.pitch-line{position:absolute;top:0;bottom:0;left:50%;border-left:1px solid #ffffff4b}.event{z-index:1;font-size:22px;font-weight:1000;text-shadow:0 2px 8px #000;padding:8px 15px}.match-actions{display:flex;justify-content:center}.match-actions button{min-width:min(100%,260px);font-size:15px;padding:15px 24px;letter-spacing:.7px}
 @keyframes highlightPop{from{opacity:0;transform:scale(.75) translateY(5px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .summary-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px auto 13px;max-width:1180px}.summary-head h2{font-size:clamp(21px,3vw,30px);margin:4px 0 0}.summary-grid{max-width:500px;margin:0 auto}.group-card{background:linear-gradient(145deg,#14233a,#0c1626);border:1px solid #314762;border-radius:13px;padding:11px;min-width:0}.group-card h3{margin:0 0 9px;color:#f3c66e;font-size:14px;letter-spacing:1.2px}.standing-row{display:grid;grid-template-columns:20px 26px minmax(0,1fr) 25px 18px;gap:8px;align-items:center;padding:8px 7px;border-bottom:1px solid #263850;font-size:14px;min-height:40px}.standing-row:last-child{border:0}.standing-pos{color:#92a6c2;font-size:12px;font-weight:900}.standing-row .flag-img{width:24px;height:17px}.standing-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800}.standing-row b{justify-self:end}.standing-row.qualified{background:#153b32;border:1px solid #2d8166;border-radius:8px;color:#d6ffed;margin:3px 0}.pass-mark{color:#62e3ae;font-weight:1000}.qual-legend{max-width:1180px;margin:0 auto 8px;color:#8edfb8;font-size:12px;display:flex;align-items:center;gap:7px}.qual-legend span{width:10px;height:10px;border-radius:3px;background:#39bb87}.groups-final{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.next-actions{display:flex;justify-content:center;margin:16px auto 6px}.next-actions button{min-width:min(100%,300px);font-size:15px;padding:14px 20px}.bracket-list{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.bracket-match{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:12px;padding:11px 12px;background:linear-gradient(120deg,#14233a,#0b1626);border:1px solid #2c405b;border-radius:10px;min-width:0}.bracket-match.user-match{border:2px solid #e9bf60;box-shadow:0 0 0 2px #e9bf6024}.bracket-team{display:flex;align-items:center;gap:6px;min-width:0;font-size:12px;font-weight:800}.bracket-team span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bracket-team .flag-img{width:22px;height:15px}.bracket-team.winner{color:#6ce0ad}.bracket-team.right{justify-content:flex-end;flex-direction:row-reverse;text-align:right}.final-card{width:min(100%,620px);margin:3vh auto;padding:clamp(19px,4vw,35px);text-align:center;border:1px solid #455e7e;border-radius:20px;background:radial-gradient(ellipse at top,#243d5c,#101b2c 75%);box-shadow:0 20px 60px #0007}.trophy{font-size:clamp(46px,9vw,78px);margin-bottom:8px;animation:trophyRise .8s cubic-bezier(.2,.8,.2,1) both}.final-card h2{font-size:clamp(24px,4vw,36px);margin:7px 0;color:#f5d28b}.final-card p{font-size:15px;color:#b7c8dd}.champion-line{display:flex;align-items:center;justify-content:center;gap:10px;margin:16px 0;padding:12px;border-radius:11px;background:#0b1627}.champion-line .flag-img{width:32px;height:22px}.champion-line small{font-size:10px;color:#f3ca79;letter-spacing:1px}.podium-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 20px}.podium-mini>div{background:#0a1423;border:1px solid #2b405d;border-radius:9px;padding:9px 5px;display:flex;flex-direction:column;align-items:center;gap:5px}.podium-mini b{color:#f2c66e}.podium-mini .flag-img{width:26px;height:18px}.podium-mini span{font-size:10px;font-weight:800;overflow-wrap:anywhere}
 @media(max-width:900px){.groups-final{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -871,8 +871,8 @@ function quickSimulatePlayerMatch(match){
   schedule(()=>finishPlayerMatch(match),1500);
  }
  function runShootout(){
-  // Igual que en la simulación normal, la tanda empieza sin los highlights
-  // del partido y sin mostrar una lista de lanzamientos bajo las selecciones.
+  // La tanda empieza limpia: se borran los highlights del partido.
+  // Cada lanzamiento se añade debajo de la selección que lo ejecuta.
   const historyA=$('highlightsA'),historyB=$('highlightsB');
   if(historyA)historyA.replaceChildren();
   if(historyB)historyB.replaceChildren();
@@ -888,10 +888,11 @@ function quickSimulatePlayerMatch(match){
    }
    const shot=shots[shotIndex++];
    if(shot.scored){if(shot.side==='a')penA++;else penB++;}
+   addPenaltyKickMark(shot.side,shot.scored,shotIndex);
    setLiveScoreText(livePenaltyScore(match.sa,match.sb,penA,penB));
    $('liveMinute').textContent='0:00 · PENALES';
    $('liveEvent').textContent=shot.scored?'⚽':'✕';
-   schedule(nextShot,115);
+   schedule(nextShot,800);
   }
   nextShot();
  }
@@ -939,6 +940,15 @@ function addHighlight(side,minute,symbol,title){
  token.textContent=String(minute)+' '+symbol;
  token.title=title||symbol;target.appendChild(token);
 }
+function addPenaltyKickMark(side,scored,attempt){
+ const target=$(side==='a'?'highlightsA':'highlightsB');if(!target)return;
+ const mark=document.createElement('span');
+ mark.className='penalty-mark '+(scored?'scored':'missed');
+ mark.textContent=scored?'⚽':'✕';
+ mark.title=(scored?'Penal convertido':'Penal fallado')+' · Lanzamiento '+attempt;
+ mark.setAttribute('aria-label',mark.title);
+ target.appendChild(mark);
+}
 function setLiveScoreText(value){
  const el=$('liveScore');if(!el)return;
  el.textContent=value;
@@ -967,8 +977,8 @@ function playLive(match){
  }
  function runShootout(){
   const shots=Array.isArray(match.shootout)?match.shootout:[];shotIndex=0;penA=0;penB=0;
-  // La tanda empieza limpia: se borran los eventos de los 120 minutos y no se muestran
-  // contadores de lanzamientos debajo de los equipos.
+  // La tanda empieza limpia: se borran los eventos de los 120 minutos;
+  // después cada penal convertido o fallado queda debajo del equipo que lo lanza.
   const historyA=$('highlightsA'),historyB=$('highlightsB');
   if(historyA)historyA.replaceChildren();
   if(historyB)historyB.replaceChildren();
@@ -982,11 +992,11 @@ function playLive(match){
     schedule(finish,1100);return;
    }
    const shot=shots[shotIndex++];if(shot.scored){if(shot.side==='a')penA++;else penB++;}
-   // Solo se muestra el lanzamiento actual en la cancha y el marcador acumulado.
+   addPenaltyKickMark(shot.side,shot.scored,shotIndex);
    $('liveMinute').textContent='0:00 · PENALES';
    setLiveScoreText(livePenaltyScore(match.sa,match.sb,penA,penB));
    $('liveEvent').textContent=shot.scored?'⚽':'✕';
-   schedule(nextShot,720);
+   schedule(nextShot,1150);
   }
   nextShot();
  }

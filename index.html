@@ -865,7 +865,7 @@ function quickSimulatePlayerMatch(match){
  function showFinal(){
   playFullTimeSequence();
   setLiveScoreText(match.penalties?matchScoreText(match):`${match.sa} – ${match.sb}`);
-  $('liveMinute').textContent=match.penalties?'0:00 · FINAL':matchFinalTimeText(match)+' · FINAL';
+  $('liveMinute').textContent=match.penalties?'FINAL':matchFinalTimeText(match)+' · FINAL';
   $('liveEvent').textContent='';
   // Deja el resultado completo visible durante 1,5 segundos antes de avanzar.
   schedule(()=>finishPlayerMatch(match),1500);
@@ -876,7 +876,7 @@ function quickSimulatePlayerMatch(match){
   const historyA=$('highlightsA'),historyB=$('highlightsB');
   if(historyA)historyA.replaceChildren();
   if(historyB)historyB.replaceChildren();
-  $('liveMinute').textContent='0:00 · PENALES';
+  $('liveMinute').textContent='PENALES';
   $('liveEvent').textContent='';
   setLiveScoreText(livePenaltyScore(match.sa,match.sb,0,0));
   function nextShot(){
@@ -887,10 +887,10 @@ function quickSimulatePlayerMatch(match){
     return;
    }
    const shot=shots[shotIndex++];
-   if(shot.scored){if(shot.side==='a')penA++;else penB++;}
+   if(shot.scored){if(shot.side==='a')penA++;else penB++;playGoalSound();}
    addPenaltyKickMark(shot.side,shot.scored,shotIndex);
    setLiveScoreText(livePenaltyScore(match.sa,match.sb,penA,penB));
-   $('liveMinute').textContent='0:00 · PENALES';
+   $('liveMinute').textContent='PENALES';
    $('liveEvent').textContent=shot.scored?'⚽':'✕';
    schedule(nextShot,800);
   }
@@ -982,18 +982,18 @@ function playLive(match){
   const historyA=$('highlightsA'),historyB=$('highlightsB');
   if(historyA)historyA.replaceChildren();
   if(historyB)historyB.replaceChildren();
-  $('liveMinute').textContent='0:00 · PENALES';$('liveEvent').textContent='';
+  $('liveMinute').textContent='PENALES';$('liveEvent').textContent='';
   setLiveScoreText(livePenaltyScore(match.sa,match.sb,0,0));
   function nextShot(){
    if(shotIndex>=shots.length){
     match.penA=penA;match.penB=penB;match.winner=penA>penB?match.a:match.b;
     setLiveScoreText(livePenaltyScore(match.sa,match.sb,penA,penB));
-    $('liveMinute').textContent='0:00 · FINAL';$('liveEvent').textContent='';
+    $('liveMinute').textContent='FINAL';$('liveEvent').textContent='';
     schedule(finish,1100);return;
    }
-   const shot=shots[shotIndex++];if(shot.scored){if(shot.side==='a')penA++;else penB++;}
+   const shot=shots[shotIndex++];if(shot.scored){if(shot.side==='a')penA++;else penB++;playGoalSound();}
    addPenaltyKickMark(shot.side,shot.scored,shotIndex);
-   $('liveMinute').textContent='0:00 · PENALES';
+   $('liveMinute').textContent='PENALES';
    setLiveScoreText(livePenaltyScore(match.sa,match.sb,penA,penB));
    $('liveEvent').textContent=shot.scored?'⚽':'✕';
    schedule(nextShot,1150);
@@ -1004,7 +1004,7 @@ function playLive(match){
   activeLiveTimer=null;
   playFullTimeSequence();
   setLiveScoreText(match.penalties?matchScoreText(match):`${match.sa} – ${match.sb}`);
-  $('liveMinute').textContent=match.penalties?'0:00 · FINAL':matchFinalTimeText(match)+' · FINAL';
+  $('liveMinute').textContent=match.penalties?'FINAL':matchFinalTimeText(match)+' · FINAL';
   $('liveEvent').textContent='';
   schedule(()=>finishPlayerMatch(match),1500);
  }

@@ -216,7 +216,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
 </head>
 <body>
 <section id="introScreen" class="intro-screen" aria-label="Inicio de CAMINO A LA GLORIA">
- <div class="intro-mark">🏆</div><div class="intro-eyebrow">VH GAMES PRESENTA</div>
+ <div class="intro-mark">🏆</div>
  <h1>CAMINO A LA <span>GLORIA</span></h1>
  <p>Elige tu selección, juega el Mundial y lucha por levantar la Copa.</p>
  <button id="startGame" class="primary intro-play">JUGAR <span>→</span></button>
@@ -1078,9 +1078,18 @@ function toggleMatchPause(){
  setMatchControlsActive(true);
 }
 function adminSchedule(fn,delay){scheduleMatchTimer('admin',fn,delay);}
+function canUnlockAdminFromCurrentScreen(){
+ const introVisible=!$('introScreen').classList.contains('hidden');
+ const selectorVisible=!$('appRoot').classList.contains('hidden')&&
+  !$('home').classList.contains('hidden')&&
+  $('game').classList.contains('hidden')&&
+  $('drawStage').classList.contains('hidden');
+ return introVisible||selectorVisible;
+}
 function adminUnlock(){
  if(!$('adminScreen').classList.contains('hidden'))return;
- if(activeLiveTimer||drawTimer)return;
+ if(!canUnlockAdminFromCurrentScreen())return;
+ if(activeLiveTimer||drawTimer||matchControlsActive||matchPaused)return;
  adminReturnState={introHidden:$('introScreen').classList.contains('hidden'),appHidden:$('appRoot').classList.contains('hidden'),drawHidden:$('drawStage').classList.contains('hidden')};
  $('introScreen').classList.add('hidden');$('appRoot').classList.add('hidden');$('drawStage').classList.add('hidden');
  $('adminScreen').classList.remove('hidden');$('globalControls').classList.remove('hidden');setMatchControlsActive(false);updateMuteButton();renderAdminMenu();
@@ -1187,8 +1196,14 @@ function runAdminLive(match){
  adminSetScore('0 – 0');$('adminLiveMinute').textContent='00:00';next();
 }
 document.addEventListener('keydown',event=>{
- if($('adminScreen').classList.contains('hidden')===false)return;
+ if(!$('adminScreen').classList.contains('hidden')||event.repeat)return;
  if(event.target&&(event.target.tagName==='INPUT'||event.target.tagName==='SELECT'||event.target.tagName==='TEXTAREA'||event.target.isContentEditable))return;
+ // La secuencia secreta solo se acepta en la portada o en el selector de países.
+ // Al entrar al sorteo o al juego, cualquier secuencia parcial se reinicia.
+ if(!canUnlockAdminFromCurrentScreen()){
+  adminSequenceIndex=0;
+  return;
+ }
  const key=event.key==='Enter'?'Enter':event.key.startsWith('Arrow')?event.key:event.key.toLowerCase();
  if(key===ADMIN_SEQUENCE[adminSequenceIndex])adminSequenceIndex++;
  else adminSequenceIndex=key===ADMIN_SEQUENCE[0]?1:0;

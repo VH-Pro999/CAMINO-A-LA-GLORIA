@@ -41,16 +41,16 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
 
 /* CAMINO A LA GLORIA 3.0 · minimal match-first interface */
 .gamebar{height:54px;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #293d59;padding:0 4px 8px;flex:0 0 auto}
-.game-identity{display:flex;align-items:center;gap:11px;min-width:0}.game-identity strong{font-size:clamp(17px,2vw,23px);display:block}.game-identity small{font-size:11px;color:#a8bad1;display:block;margin-top:2px}.game-flag{width:38px;height:26px;border-radius:4px}
+.game-identity{display:flex;align-items:center;gap:11px;min-width:0}.game-identity strong{font-size:clamp(17px,2vw,23px);display:block}#game .game-identity small{display:none!important}.game-flag{width:38px;height:26px;border-radius:4px}
 #game{flex:1;min-height:0;display:flex;flex-direction:column;gap:9px}#view{flex:1;min-height:0;overflow:auto;padding:4px 3px 10px;scrollbar-width:thin;scrollbar-color:#344b69 transparent}
 .match-shell{width:min(100%,920px);margin:0 auto;display:flex;flex-direction:column;gap:12px}
 #view:has(.match-shell){display:flex;flex-direction:column;justify-content:center}.match-kicker{display:flex;justify-content:space-between;align-items:center;color:#a7bad3;font-size:12px;font-weight:850;letter-spacing:1.2px}.scoreboard{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,.65fr) minmax(0,1fr);align-items:center;gap:10px;padding:clamp(17px,3vh,28px) clamp(12px,3vw,30px);border:1px solid #3a5273;border-radius:20px;background:radial-gradient(ellipse at 50% 0,#243d5e 0,#14243a 45%,#0b1525 100%);box-shadow:0 18px 50px #0005;min-height:190px}
 .team-side{min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px}.team-side strong{font-size:clamp(16px,2.2vw,23px);font-weight:900;overflow-wrap:anywhere}.team-crest{width:82px;height:58px;display:grid;place-items:center}.match-flag{width:72px;height:49px;border-radius:7px;box-shadow:0 5px 16px #0008}.score-center{text-align:center}.bigscore{font-size:clamp(34px,6vw,57px);font-weight:1000;letter-spacing:1px;color:#f6cc78;white-space:nowrap}.minute{font-size:13px;color:#a9c4e4;letter-spacing:1.5px;margin-top:5px;font-weight:800}
 .team-highlights{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;min-height:23px;margin-top:3px}.penalty-mark{display:inline-grid;place-items:center;min-width:25px;height:25px;padding:0 5px;border-radius:7px;font-size:17px;font-weight:1000;line-height:1;background:#102039;border:1px solid #425a78;animation:highlightPop .24s ease both}.penalty-mark.scored{color:#ffe09a;border-color:#b88b43;background:#3a2d18}.penalty-mark.missed{color:#ff9ca5;border-color:#9c4b58;background:#351b26}.highlight-token{font-size:12px;font-weight:850;padding:4px 7px;border-radius:7px;background:#091424;border:1px solid #354a66;color:#f5d58f;animation:highlightPop .24s ease both}.pitch-wrap{position:relative;min-height:110px}.pitch{height:108px;margin:0;position:relative;overflow:hidden;border:3px solid #427452;border-radius:14px;background:repeating-linear-gradient(90deg,#174a31 0,#174a31 10%,#1b5537 10%,#1b5537 20%);display:grid;place-items:center}.pitch:before{content:none}.pitch:after{content:none}.pitch-circle{position:absolute;inset:10px 39%;border:1px solid #ffffff4b;border-radius:50%}.pitch-line{position:absolute;top:0;bottom:0;left:50%;border-left:1px solid #ffffff4b}.event{z-index:1;font-size:22px;font-weight:1000;text-shadow:0 2px 8px #000;padding:8px 15px}.match-actions{display:flex;justify-content:center}.match-actions button{min-width:min(100%,260px);font-size:15px;padding:15px 24px;letter-spacing:.7px}
 @keyframes highlightPop{from{opacity:0;transform:scale(.75) translateY(5px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.summary-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px auto 13px;max-width:1180px}.summary-head h2{font-size:clamp(21px,3vw,30px);margin:4px 0 0}.summary-grid{max-width:500px;margin:0 auto}.group-card{background:linear-gradient(145deg,#14233a,#0c1626);border:1px solid #314762;border-radius:13px;padding:11px;min-width:0}.group-card h3{margin:0 0 9px;color:#f3c66e;font-size:14px;letter-spacing:1.2px}.standing-row{display:grid;grid-template-columns:20px 26px minmax(0,1fr) 25px 18px;gap:8px;align-items:center;padding:8px 7px;border-bottom:1px solid #263850;font-size:14px;min-height:40px}.standing-row:last-child{border:0}.standing-pos{color:#92a6c2;font-size:12px;font-weight:900}.standing-row .flag-img{width:24px;height:17px}.standing-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800}.standing-row b{justify-self:end}.standing-row.qualified{background:#153b32;border:1px solid #2d8166;border-radius:8px;color:#d6ffed;margin:3px 0}.pass-mark{color:#62e3ae;font-weight:1000}.qual-legend{max-width:1180px;margin:0 auto 8px;color:#8edfb8;font-size:12px;display:flex;align-items:center;gap:7px}.qual-legend span{width:10px;height:10px;border-radius:3px;background:#39bb87}.groups-final{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.next-actions{display:flex;justify-content:center;margin:16px auto 6px}.next-actions button{min-width:min(100%,300px);font-size:15px;padding:14px 20px}.bracket-list{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.bracket-match{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:12px;padding:11px 12px;background:linear-gradient(120deg,#14233a,#0b1626);border:1px solid #2c405b;border-radius:10px;min-width:0}.bracket-match.user-match{border:2px solid #e9bf60;box-shadow:0 0 0 2px #e9bf6024}.bracket-team{display:flex;align-items:center;gap:6px;min-width:0;font-size:12px;font-weight:800}.bracket-team span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bracket-team .flag-img{width:22px;height:15px}.bracket-team.winner{color:#6ce0ad}.bracket-team.right{justify-content:flex-end;flex-direction:row-reverse;text-align:right}.final-card{width:min(100%,620px);margin:3vh auto;padding:clamp(19px,4vw,35px);text-align:center;border:1px solid #455e7e;border-radius:20px;background:radial-gradient(ellipse at top,#243d5c,#101b2c 75%);box-shadow:0 20px 60px #0007}.trophy{font-size:clamp(46px,9vw,78px);margin-bottom:8px;animation:trophyRise .8s cubic-bezier(.2,.8,.2,1) both}.final-card h2{font-size:clamp(24px,4vw,36px);margin:7px 0;color:#f5d28b}.final-card p{font-size:15px;color:#b7c8dd}.champion-line{display:flex;align-items:center;justify-content:center;gap:10px;margin:16px 0;padding:12px;border-radius:11px;background:#0b1627}.champion-line .flag-img{width:32px;height:22px}.champion-line small{font-size:10px;color:#f3ca79;letter-spacing:1px}.podium-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 20px}.podium-mini>div{background:#0a1423;border:1px solid #2b405d;border-radius:9px;padding:9px 5px;display:flex;flex-direction:column;align-items:center;gap:5px}.podium-mini b{color:#f2c66e}.podium-mini .flag-img{width:26px;height:18px}.podium-mini span{font-size:10px;font-weight:800;overflow-wrap:anywhere}
+.summary-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px auto 13px;max-width:1180px}.summary-head h2{font-size:clamp(21px,3vw,30px);margin:4px 0 0}.summary-grid{max-width:500px;margin:0 auto}.other-group-match{max-width:520px;margin:14px auto 0;padding:12px;border:1px solid #344b69;border-radius:13px;background:linear-gradient(145deg,#14233a,#0c1626)}.other-group-match-title{margin:0 0 9px;color:#f3c66e;font-size:12px;font-weight:900;letter-spacing:1px;text-align:center}.other-group-match .bracket-match{max-width:100%;}.group-card{background:linear-gradient(145deg,#14233a,#0c1626);border:1px solid #314762;border-radius:13px;padding:11px;min-width:0}.group-card h3{margin:0 0 9px;color:#f3c66e;font-size:14px;letter-spacing:1.2px}.standing-row{display:grid;grid-template-columns:20px 26px minmax(0,1fr) 25px 18px;gap:8px;align-items:center;padding:8px 7px;border-bottom:1px solid #263850;font-size:14px;min-height:40px}.standing-row:last-child{border:0}.standing-pos{color:#92a6c2;font-size:12px;font-weight:900}.standing-row .flag-img{width:24px;height:17px}.standing-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800}.standing-row b{justify-self:end}.standing-row.qualified{background:#153b32;border:1px solid #2d8166;border-radius:8px;color:#d6ffed;margin:3px 0}.pass-mark{color:#62e3ae;font-weight:1000}.qual-legend{max-width:1180px;margin:0 auto 8px;color:#8edfb8;font-size:12px;display:flex;align-items:center;gap:7px}.qual-legend span{width:10px;height:10px;border-radius:3px;background:#39bb87}.groups-final{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.next-actions{display:flex;justify-content:center;margin:16px auto 6px}.next-actions button{min-width:min(100%,300px);font-size:15px;padding:14px 20px}.bracket-list{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.bracket-match{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:12px;padding:11px 12px;background:linear-gradient(120deg,#14233a,#0b1626);border:1px solid #2c405b;border-radius:10px;min-width:0}.bracket-match.user-match{border:2px solid #e9bf60;box-shadow:0 0 0 2px #e9bf6024}.bracket-team{display:flex;align-items:center;gap:6px;min-width:0;font-size:12px;font-weight:800}.bracket-team span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bracket-team .flag-img{width:22px;height:15px}.bracket-team.winner{color:#6ce0ad}.bracket-team.right{justify-content:flex-end;flex-direction:row-reverse;text-align:right}.final-card{width:min(100%,620px);margin:3vh auto;padding:clamp(19px,4vw,35px);text-align:center;border:1px solid #455e7e;border-radius:20px;background:radial-gradient(ellipse at top,#243d5c,#101b2c 75%);box-shadow:0 20px 60px #0007}.trophy{font-size:clamp(46px,9vw,78px);margin-bottom:8px;animation:trophyRise .8s cubic-bezier(.2,.8,.2,1) both}.final-card h2{font-size:clamp(24px,4vw,36px);margin:7px 0;color:#f5d28b}.final-card p{font-size:15px;color:#b7c8dd}.champion-line{display:flex;align-items:center;justify-content:center;gap:10px;margin:16px 0;padding:12px;border-radius:11px;background:#0b1627}.champion-line .flag-img{width:32px;height:22px}.champion-line small{font-size:10px;color:#f3ca79;letter-spacing:1px}.podium-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 20px}.podium-mini>div{background:#0a1423;border:1px solid #2b405d;border-radius:9px;padding:9px 5px;display:flex;flex-direction:column;align-items:center;gap:5px}.podium-mini b{color:#f2c66e}.podium-mini .flag-img{width:26px;height:18px}.podium-mini span{font-size:10px;font-weight:800;overflow-wrap:anywhere}
 @media(max-width:900px){.groups-final{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:650px){.app{gap:6px}.gamebar{height:47px;min-height:47px}.game-identity strong{font-size:16px}.game-identity small{font-size:10px}.scoreboard{min-height:165px;padding:16px 8px;gap:4px}.team-side strong{font-size:14px}.team-crest{width:62px;height:45px}.match-flag{width:58px;height:40px}.bigscore{font-size:36px}.team-highlights{gap:3px}.highlight-token{font-size:10px;padding:3px 5px}.pitch,.pitch-wrap{height:92px;min-height:92px}.groups-final{grid-template-columns:repeat(2,minmax(0,1fr))}.bracket-list{grid-template-columns:1fr}.standing-row{font-size:12px;min-height:36px;padding:6px}.group-card{padding:8px}.group-card h3{font-size:12px}.bracket-match{grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:8px}.bracket-team{font-size:11px}.next-actions button{font-size:13px}}
+@media(max-width:650px){.app{gap:6px}.gamebar{height:47px;min-height:47px}.game-identity strong{font-size:16px}.scoreboard{min-height:165px;padding:16px 8px;gap:4px}.team-side strong{font-size:14px}.team-crest{width:62px;height:45px}.match-flag{width:58px;height:40px}.bigscore{font-size:36px}.team-highlights{gap:3px}.highlight-token{font-size:10px;padding:3px 5px}.pitch,.pitch-wrap{height:92px;min-height:92px}.groups-final{grid-template-columns:repeat(2,minmax(0,1fr))}.bracket-list{grid-template-columns:1fr}.standing-row{font-size:12px;min-height:36px;padding:6px}.group-card{padding:8px}.group-card h3{font-size:12px}.bracket-match{grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:8px}.bracket-team{font-size:11px}.next-actions button{font-size:13px}}
 @media(max-width:390px){.scoreboard{grid-template-columns:minmax(0,1fr) 75px minmax(0,1fr);padding:14px 5px}.team-side strong{font-size:12px}.team-crest{width:51px}.match-flag{width:48px;height:33px}.bigscore{font-size:29px}.minute{font-size:10px}.groups-final{grid-template-columns:1fr}.summary-head h2{font-size:20px}.bracket-team{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.penalty-ball.ball-kick,.keeper-dive-left,.keeper-dive-right,.highlight-token,.trophy{animation:none!important}}
 
@@ -58,7 +58,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
 /* CAMINO A LA GLORIA 3.1 · legibilidad y controles de grupo */
 .gamebar{justify-content:flex-start}
 .game-identity strong{font-size:clamp(20px,2.3vw,27px)}
-.game-identity small{font-size:13px}
+
 .match-kicker{font-size:14px}
 .team-side strong{font-size:clamp(18px,2.35vw,25px)}
 .bigscore{font-size:clamp(42px,5vw,58px)}
@@ -78,7 +78,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
 .next-actions button{font-size:17px;min-height:48px}
 #backToMatch{min-width:min(100%,320px)}
 @media(max-width:650px){
- .game-identity strong{font-size:19px}.game-identity small{font-size:12px}
+ .game-identity strong{font-size:19px}
  .match-kicker{font-size:12px}.team-side strong{font-size:16px}
  .bigscore{font-size:38px}.minute{font-size:12px}
  .highlight-token{font-size:13px;padding:4px 6px}
@@ -212,6 +212,15 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
 .global-controls button.pause-active{background:linear-gradient(135deg,#ffda88,#d79a42);color:#201608;border-color:#f3c66e}
 .global-controls button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media(max-width:600px){.global-controls{top:8px;right:8px;gap:6px}.global-controls button{width:39px;height:38px;font-size:17px}}
+
+/* Resultados de los dos partidos de cada jornada del grupo del usuario */
+.group-day-matches{margin-top:18px;}
+.group-day-matches-title{font-size:13px;font-weight:950;letter-spacing:1.4px;color:var(--gold);margin:0 0 8px;}
+.group-match-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:10px 0 18px;}
+.group-match-card{min-width:0;background:linear-gradient(145deg,rgba(20,32,50,.96),rgba(11,19,32,.96));border:1px solid var(--line);border-radius:14px;padding:14px;}
+.group-match-card h3{margin:0 0 11px;color:var(--gold);font-size:12px;letter-spacing:1.2px;font-weight:900;}
+.group-match-card .bracket-match{margin:0;}
+@media(max-width:680px){.group-match-results{grid-template-columns:1fr;gap:10px;}.group-match-card{padding:12px;}}
 </style>
 </head>
 <body>
@@ -255,7 +264,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
   </div>
 </section>
 <section id="game" class="hidden">
-  <div class="gamebar"><div class="game-identity"><span id="gameFlag"></span><div><strong id="gameTeam">—</strong><small id="stageLabel">—</small></div></div></div>
+  <div class="gamebar"><div class="game-identity"><span id="gameFlag"></span><div><strong id="gameTeam">—</strong></div></div></div>
   <div id="view" aria-live="polite"></div>
 </section>
 
@@ -264,7 +273,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
  <div class="admin-shell"><div id="adminView"></div></div>
 </section>
 <section id="drawStage" class="hidden" aria-live="polite">
-  <div class="draw-top"><div><div class="eyebrow">SORTEO MUNDIAL · 48 SELECCIONES</div><h2>Así se forman los grupos</h2></div></div>
+  <div class="draw-top"><div><div class="eyebrow">SORTEO MUNDIAL · 48 SELECCIONES</div><h2>Sorteo de grupos</h2></div></div>
   <div class="draw-progress-wrap"><div class="draw-progress" id="drawProgress"></div></div>
   <div class="draw-meta"><span id="drawPot">Preparando los bombos…</span><span>4 bombos · 12 grupos</span></div>
   <div class="draw-grid" id="drawGrid"></div>
@@ -505,7 +514,7 @@ function makeTournament(){
   const pairs=[[0,1],[2,3],[0,2],[3,1],[3,0],[1,2]];
   g.matches=pairs.map((p,i)=>({a:g.teams[p[0]],b:g.teams[p[1]],round:Math.floor(i/2)+1,done:false,events:[],sa:0,sb:0,group:g.name}));
  });
- world={mine,groups,pots,day:1,played:0,phase:'groups',screen:'match',knockoutRounds:[],currentRound:0,champion:null,thirdPlace:null,thirdQualifiers:[],lastMatch:null,eliminatedAt:null,groupPlace:null,placement:null,pendingEliminationView:false,lastKnockoutDisplayIndex:null,lastCompletedKnockoutRoundIndex:null};
+ world={mine,groups,pots,day:1,played:0,phase:'groups',screen:'match',knockoutRounds:[],currentRound:0,champion:null,thirdPlace:null,thirdQualifiers:[],lastMatch:null,eliminatedAt:null,groupPlace:null,placement:null,pendingEliminationView:false,lastKnockoutDisplayIndex:null,lastCompletedKnockoutRoundIndex:null,knockoutResultsEliminated:false};
  return true;
 }
 function beginDraw(){if(!makeTournament())return;$('home').classList.add('hidden');$('drawStage').classList.remove('hidden');$('continueDraw').classList.add('hidden');$('skipDraw').disabled=false;
@@ -740,10 +749,11 @@ function autoCompleteTournament(){
 function prepareCurrentKnockoutRound(){
  if(world.phase!=='knockout')return;
  const round=world.knockoutRounds[world.currentRound];if(!round)return;
- round.matches.filter(m=>!m.done&&m.a!==world.mine&&m.b!==world.mine).forEach(m=>simulate(m,true));
  const mineMatch=round.matches.find(m=>!m.done&&(m.a===world.mine||m.b===world.mine));
- if(!mineMatch){if(!world.eliminatedAt)world.eliminatedAt=world.knockoutRounds[Math.max(0,world.currentRound-1)]?.name||'fase de grupos';autoCompleteTournament();world.screen='result';}
- else world.screen='match';
+ if(!mineMatch){
+  if(!world.eliminatedAt)world.eliminatedAt=world.knockoutRounds[Math.max(0,world.currentRound-1)]?.name||'fase de grupos';
+  autoCompleteTournament();setPlacement();world.screen='result';
+ }else world.screen='match';
 }
 function continueAfterGroupSummary(){
  if(world.day<3){world.day++;world.screen='match';}
@@ -758,63 +768,121 @@ function finishPlayerMatch(match){
  world.lastMatch=match;
  if(world.phase==='groups'){
   simulateRemainderOfGroupDay();
-  if(world.day===3){buildBracket();world.screen='group-summary-final';}
-  else world.screen='group-summary';
+  if(world.day===3)buildBracket();
+  // Todas las jornadas muestran primero la tabla del grupo y debajo sus dos partidos.
+  world.screen='group-summary';
   render();return;
  }
  const completedRoundIndex=world.currentRound;
  const round=world.knockoutRounds[completedRoundIndex],roundName=round.name;
+ // Primero se resuelve el partido del usuario y luego, en automático,
+ // el resto de encuentros de ESA misma ronda. No se adelanta la siguiente.
  round.matches.filter(m=>!m.done).forEach(m=>simulate(m,true));
  const userWon=match.winner===world.mine;
  const userEliminated=!userWon&&roundName!=='Semifinales'&&!match.isFinal&&!match.isThirdPlace;
  world.lastCompletedKnockoutRoundIndex=completedRoundIndex;
+ world.knockoutResultsEliminated=!!userEliminated;
  if(userEliminated){
   world.eliminatedAt=roundName;
-  advanceKnockout();
-  world.pendingEliminationView=true;
-  world.lastKnockoutDisplayIndex=completedRoundIndex;
-  world.screen='bracket';
+  world.screen='round-results';
   render();return;
  }
+ // Genera los emparejamientos siguientes, pero no simula sus partidos.
+ // El jugador verá primero todos los cruces de la nueva ronda.
  advanceKnockout();
- if(world.phase==='champion'){setPlacement();world.screen='result';render();return;}
- if(world.currentRound<world.knockoutRounds.length){
-  const next=world.knockoutRounds[world.currentRound];const hasUser=next.matches.some(m=>m.a===world.mine||m.b===world.mine);
-  if(!hasUser){if(!world.eliminatedAt)world.eliminatedAt=roundName;autoCompleteTournament();world.screen='result';}
-  else {next.matches.filter(m=>!m.done&&m.a!==world.mine&&m.b!==world.mine).forEach(m=>simulate(m,true));world.screen='bracket';}
+ if(world.phase==='champion'){
+  setPlacement();
+  world.screen='round-results';
+  render();return;
  }
+ if(world.currentRound<world.knockoutRounds.length){
+  const next=world.knockoutRounds[world.currentRound];
+  const hasUser=next.matches.some(m=>m.a===world.mine||m.b===world.mine);
+  if(!hasUser){
+   world.eliminatedAt=world.eliminatedAt||roundName;
+   world.knockoutResultsEliminated=true;
+   autoCompleteTournament();setPlacement();
+  }
+ }
+ world.screen='round-results';
  render();
 }
 function renderStats(){
  const group=world.groups.find(g=>g.teams.includes(world.mine));
- $('stageLabel').textContent=world.screen==='group-peek'?'GRUPO '+group.name:world.screen==='group-summary-final'?'FASE DE GRUPOS · FINAL':world.screen==='group-summary'?'JORNADA '+world.day:world.phase==='groups'?'GRUPO '+group.name+' · J'+world.day:world.phase==='champion'?'MUNDIAL FINALIZADO':world.pendingEliminationView?(world.knockoutRounds[world.lastKnockoutDisplayIndex]?.name||'ELIMINATORIAS').toUpperCase()+' · RESULTADOS':(world.knockoutRounds[world.currentRound]?.name||'ELIMINATORIAS').toUpperCase(); $('stageLabel').style.display=world.screen==='match'?'none':'';
  $('gameFlag').innerHTML=flagImg(world.mine,'game-flag');$('gameTeam').textContent=world.mine.name;
 }
-function render(){renderStats();const view=$('view');if(world.screen==='match')renderMatch(view);else if(world.screen==='group-peek')renderGroupPeek(view);else if(world.screen==='group-summary')renderGroupSummary(view,false);else if(world.screen==='group-summary-final')renderGroupSummary(view,true);else if(world.screen==='bracket')renderBracket(view);else renderFinalResult(view);}
+function render(){renderStats();const view=$('view');if(world.screen==='match')renderMatch(view);else if(world.screen==='group-peek')renderGroupPeek(view);else if(world.screen==='group-summary')renderGroupSummary(view,false);else if(world.screen==='group-summary-final')renderGroupSummary(view,true);else if(world.screen==='bracket')renderBracket(view);else if(world.screen==='round-results')renderKnockoutResults(view);else renderFinalResult(view);}
 function groupRowsHTML(group,final){const rows=sorted(group),myGroup=group.teams.includes(world.mine);return `<div class="group-card ${myGroup?'my-group':''}"><h3>GRUPO ${group.name}</h3>${rows.map((x,i)=>{const pass=final&&isQualified(x.team),mine=x.team===world.mine;return `<div class="standing-row ${pass?'qualified':''} ${mine?'current-team':''}"><span class="standing-pos">${i+1}</span>${flagImg(x.team)}<span class="standing-name">${escapeHTML(x.team.name)}</span><b>${x.pts}</b>${pass?'<span class="pass-mark">✓</span>':''}</div>`;}).join('')}</div>`;}
 function renderGroupPeek(v){
  const group=world.groups.find(g=>g.teams.includes(world.mine));
  v.innerHTML=`<div class="summary-head"><div><span class="eyebrow">FASE DE GRUPOS</span><h2>Grupo ${group.name}</h2></div></div><div class="summary-grid">${groupRowsHTML(group,false)}</div><div class="next-actions"><button class="primary" id="backToMatch">VOLVER AL PARTIDO</button></div>`;
  $('backToMatch').addEventListener('click',()=>{world.screen='match';render();});
 }
+function groupDayMatchesHTML(group){
+ const matches=group.matches.filter(m=>m.round===world.day&&m.done);
+ const mine=matches.find(m=>m.a===world.mine||m.b===world.mine)||world.lastMatch;
+ const other=matches.find(m=>m!==mine);
+ const pair=[mine,other].filter(Boolean);
+ if(!pair.length)return '';
+ // El orden se sortea una sola vez por jornada y se conserva al volver a renderizar.
+ // Así el partido del usuario no aparece siempre en primer lugar ni cambia al actualizar la pantalla.
+ if(!world.groupDayMatchDisplayOrders)world.groupDayMatchDisplayOrders={};
+ let ordered=world.groupDayMatchDisplayOrders[world.day];
+ const samePair=Array.isArray(ordered)&&ordered.length===pair.length&&ordered.every(m=>pair.includes(m));
+ if(!samePair){
+  ordered=[...pair];
+  if(ordered.length>1&&Math.random()<0.5)ordered.reverse();
+  world.groupDayMatchDisplayOrders[world.day]=ordered;
+ }
+ return `<div class="group-day-matches"><div class="group-day-matches-title">PARTIDOS DE LA JORNADA ${world.day}</div><div class="group-match-results">${ordered.map((m,i)=>`<section class="group-match-card"><h3>PARTIDO ${i+1}</h3>${matchCardCompact(m)}</section>`).join('')}</div></div>`;
+}
 function renderGroupSummary(v,final){
  const group=world.groups.find(g=>g.teams.includes(world.mine));
- if(!final){v.innerHTML=`<div class="summary-head"><div><span class="eyebrow">JORNADA ${world.day}</span><h2>Grupo ${group.name}</h2></div></div><div class="summary-grid">${groupRowsHTML(group,false)}</div><div class="next-actions"><button class="primary" id="continueBtn">SIGUIENTE PARTIDO →</button></div>`;}
- else{v.innerHTML=`<div class="summary-head"><div><span class="eyebrow">FASE DE GRUPOS · FINAL</span><h2>Clasificación final</h2></div></div><div class="qual-legend"><span></span> Clasificado</div><div class="groups-final">${world.groups.map(g=>groupRowsHTML(g,true)).join('')}</div><div class="next-actions"><button class="primary" id="continueBtn">${isQualified(world.mine)?'VER DIECISEISAVOS →':'VER RESULTADO FINAL →'}</button></div>`;}
- $('continueBtn').addEventListener('click',continueAfterGroupSummary);
+ if(!final){
+  const isLastDay=world.day===3;
+  const table=groupRowsHTML(group,isLastDay);
+  const matchResults=groupDayMatchesHTML(group);
+  v.innerHTML=`<div class="summary-head"><div><span class="eyebrow">FASE DE GRUPOS · GRUPO ${group.name}</span><h2>Resultados de jornada ${world.day}</h2></div></div><div class="summary-grid">${table}</div>${matchResults}<div class="next-actions"><button class="primary" id="continueBtn">${isLastDay?'VER TODOS LOS GRUPOS →':'SIGUIENTE JORNADA →'}</button></div>`;
+  $('continueBtn').addEventListener('click',()=>{
+   if(isLastDay){world.screen='group-summary-final';render();}
+   else continueAfterGroupSummary();
+  });
+ }else{
+  v.innerHTML=`<div class="summary-head"><div><span class="eyebrow">FASE DE GRUPOS · FINAL</span><h2>Clasificación final</h2></div></div><div class="qual-legend"><span></span> Clasificado</div><div class="groups-final">${world.groups.map(g=>groupRowsHTML(g,true)).join('')}</div><div class="next-actions"><button class="primary" id="continueBtn">${isQualified(world.mine)?'VER DIECISEISAVOS →':'VER RESULTADO FINAL →'}</button></div>`;
+  $('continueBtn').addEventListener('click',continueAfterGroupSummary);
+ }
 }
 function renderBracket(v){
- const pendingElimination=!!world.pendingEliminationView;
  const round=world.knockoutRounds[world.currentRound];
- const displayIndex=pendingElimination?world.lastKnockoutDisplayIndex:Math.max(0,world.currentRound-1);
- const shown=world.knockoutRounds[displayIndex]||round;
- const matches=shown?.matches||[];
- const isFirstView=!pendingElimination&&world.currentRound===0;
- const status=pendingElimination?`${shown.name.toUpperCase()} · RESULTADOS`:isFirstView?'DIECISEISAVOS · CUADRO FIFA':`${shown.name.toUpperCase()} · RESULTADOS`;
- const heading=pendingElimination?`Resultados de ${shown.name}`:isFirstView?'Rama de 32 equipos':`Resultados de ${shown.name}`;
- const buttonLabel=pendingElimination?'VER RESULTADO FINAL →':'JUGAR SIGUIENTE PARTIDO →';
- v.innerHTML=`<div class="summary-head"><div><span class="eyebrow">${status}</span><h2>${heading}</h2></div></div><div class="bracket-list">${matches.map(m=>matchCardCompact(m)).join('')}</div><div class="next-actions"><button class="primary" id="continueBtn">${buttonLabel}</button></div>`;
- $('continueBtn').addEventListener('click',()=>{if(pendingElimination){world.pendingEliminationView=false;autoCompleteTournament();world.screen='result';render();}else continueFromBracket();});
+ if(!round){world.screen='result';renderFinalResult(v);return;}
+ const isFirstView=world.currentRound===0;
+ const isFinalRound=round.name==='Final';
+ const status=isFirstView?'PARTIDOS DE DIECISEISAVOS':isFinalRound?'PARTIDOS DE FINAL Y TERCER PUESTO':`${round.name.toUpperCase()} · PARTIDOS`;
+ const heading=isFirstView?'Partidos de dieciseisavos':isFinalRound?'Partidos de final y tercer puesto':`Partidos de ${round.name}`;
+ const buttonLabel=isFirstView?'JUGAR DIECISEISAVOS →':'JUGAR SIGUIENTE PARTIDO →';
+ v.innerHTML=`<div class="summary-head"><div><span class="eyebrow">${status}</span><h2>${heading}</h2></div></div><div class="bracket-list">${round.matches.map(m=>matchCardCompact(m)).join('')}</div><div class="next-actions"><button class="primary" id="continueBtn">${buttonLabel}</button></div>`;
+ $('continueBtn').addEventListener('click',continueFromBracket);
+}
+function renderKnockoutResults(v){
+ const index=world.lastCompletedKnockoutRoundIndex;
+ const round=world.knockoutRounds[index];
+ if(!round){world.screen='result';renderFinalResult(v);return;}
+ const name=round.name;
+ const heading=name==='Final'?'Resultados de final y tercer puesto':`Resultados de ${name}`;
+ const status=name==='Final'?'PARTIDOS DE FINAL Y TERCER PUESTO':`${name.toUpperCase()} · RESULTADOS`;
+ const isFinal=world.phase==='champion';
+ const eliminated=!!world.knockoutResultsEliminated;
+ const buttonLabel=(eliminated||isFinal)?'VER RESULTADO FINAL →':'VER SIGUIENTE RONDA →';
+ v.innerHTML=`<div class="summary-head"><div><span class="eyebrow">${status}</span><h2>${heading}</h2></div></div><div class="bracket-list">${round.matches.map(m=>matchCardCompact(m)).join('')}</div><div class="next-actions"><button class="primary" id="continueBtn">${buttonLabel}</button></div>`;
+ $('continueBtn').addEventListener('click',()=>{
+  if(eliminated||isFinal){
+   if(eliminated){autoCompleteTournament();setPlacement();}
+   else setPlacement();
+   world.screen='result';render();
+  }else{
+   world.screen='bracket';render();
+  }
+ });
 }
 function matchScoreText(m){return m.penalties?`${m.sa}(${m.penA}) - ${m.sb}(${m.penB})`:`${m.sa} – ${m.sb}`;}
 function matchFinalTimeText(m){return m.finalMinuteLabel||((m.extraTime?120:90)+'+'+(m.stoppageTime||0)+"'");}
@@ -833,8 +901,9 @@ function renderFinalResult(v){
 function getPodiumHTML(){const finalRound=world.knockoutRounds[4];if(!finalRound)return '';const final=finalRound.matches.find(m=>m.isFinal),bronze=finalRound.matches.find(m=>m.isThirdPlace);const second=final.winner===final.a?final.b:final.a;const fourth=bronze.winner===bronze.a?bronze.b:bronze.a;return `<div><b>1</b>${flagImg(world.champion)}<span>${escapeHTML(world.champion.name)}</span></div><div><b>2</b>${flagImg(second)}<span>${escapeHTML(second.name)}</span></div><div><b>3</b>${flagImg(bronze.winner)}<span>${escapeHTML(bronze.winner.name)}</span></div><div><b>4</b>${flagImg(fourth)}<span>${escapeHTML(fourth.name)}</span></div>`;}
 function renderMatch(v){
  const m=currentPendingMatch();if(!m){if(world.phase==='groups'){v.innerHTML='<div class="final-card"><h2>Jornada completada</h2><button class="primary" id="continueBtn">CONTINUAR →</button></div>';$('continueBtn').addEventListener('click',()=>{world.screen='group-summary';render();});}else{world.screen='result';renderFinalResult(v);}return;}
- const groupText=m.group?`GRUPO ${m.group} · JORNADA ${world.day}`:m.roundLabel.toUpperCase()+' · M'+m.number;
- v.innerHTML=`<div class="match-shell"><div class="match-kicker"><span>${groupText}</span><span>${m.number?'M'+m.number:''}</span></div><div class="scoreboard"><div class="team-side"><div class="team-crest">${flagImg(m.a,'match-flag')}</div><strong>${escapeHTML(m.a.name)}</strong><div class="team-highlights" id="highlightsA"></div></div><div class="score-center"><div class="bigscore" id="liveScore">VS</div><div class="minute" id="liveMinute">00:00</div></div><div class="team-side"><div class="team-crest">${flagImg(m.b,'match-flag')}</div><strong>${escapeHTML(m.b.name)}</strong><div class="team-highlights" id="highlightsB"></div></div></div><div class="pitch-wrap"><div class="pitch"><div class="pitch-circle"></div><div class="pitch-line"></div><div class="event" id="liveEvent"></div></div></div><div class="match-actions"><button class="primary" id="playLive">▶ JUGAR PARTIDO</button><button class="ghost" id="quickSim">SIMULACIÓN RÁPIDA</button></div></div>`;
+ const roundTitles={Dieciseisavos:'DIECISEISAVOS DE FINAL',Octavos:'OCTAVOS DE FINAL',Cuartos:'CUARTOS DE FINAL',Semifinales:'SEMIFINALES',Final:'FINAL','Tercer puesto':'TERCER PUESTO','Partido amistoso':'PARTIDO AMISTOSO'};
+ const groupText=m.group?`GRUPO ${m.group} · JORNADA ${world.day}`:(roundTitles[m.roundLabel]||String(m.roundLabel||'DIECISEISAVOS DE FINAL').toUpperCase());
+ v.innerHTML=`<div class="match-shell"><div class="match-kicker"><span>${groupText}</span><span></span></div><div class="scoreboard"><div class="team-side"><div class="team-crest">${flagImg(m.a,'match-flag')}</div><strong>${escapeHTML(m.a.name)}</strong><div class="team-highlights" id="highlightsA"></div></div><div class="score-center"><div class="bigscore" id="liveScore">VS</div><div class="minute" id="liveMinute">00:00</div></div><div class="team-side"><div class="team-crest">${flagImg(m.b,'match-flag')}</div><strong>${escapeHTML(m.b.name)}</strong><div class="team-highlights" id="highlightsB"></div></div></div><div class="pitch-wrap"><div class="pitch"><div class="pitch-circle"></div><div class="pitch-line"></div><div class="event" id="liveEvent"></div></div></div><div class="match-actions"><button class="primary" id="playLive">▶ JUGAR PARTIDO</button><button class="ghost" id="quickSim">SIMULACIÓN RÁPIDA</button></div></div>`;
  $('playLive').addEventListener('click',()=>playLive(m));
  $('quickSim').addEventListener('click',()=>quickSimulatePlayerMatch(m));
 }

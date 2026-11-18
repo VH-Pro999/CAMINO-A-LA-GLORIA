@@ -306,6 +306,16 @@ let selected=teams.findIndex(t=>t.code==='AR');
 let confIndex=0,world=null,tab='groups',drawTimer=null,drawSequence=[],drawIndex=0,activeLiveTimer=null;
 let matchControlsActive=false,matchPaused=false,matchTimerMeta=null;
 const $=id=>document.getElementById(id);
+// Cada cambio de pantalla o interfaz comienza desde el inicio de su barra.
+// También se reinicia en el siguiente frame para cubrir el reflow tras mostrar/ocultar paneles.
+function scrollInterfacesToTop(extraTargets=[]){
+ const targets=[document.scrollingElement,document.documentElement,document.body,
+  $('view'),$('drawGrid'),$('countryGrid'),$('adminScreen'),document.querySelector('.admin-shell'),...extraTargets];
+ const reset=()=>{for(const element of targets){if(element){element.scrollTop=0;element.scrollLeft=0;}}};
+ reset();
+ if(typeof requestAnimationFrame==='function')requestAnimationFrame(reset);
+}
+
 // ===== AUDIO LOCAL DE ESTADIO · sin voces ni archivos externos =====
 // Las reacciones de tribuna y los silbatos se generan con Web Audio: funcionan
 // sin descargas adicionales, sin narración sintética y sin depender de servidores.
@@ -455,6 +465,7 @@ function renderPicker(){
  $('countryGrid').innerHTML=list.map(t=>`<button class="country-card ${t===currentTeam()?'selected':''}" data-code="${t.code}" title="${escapeHTML(t.name)}">${flagImg(t)}<span class="country-label"><b>${escapeHTML(t.name)}</b></span></button>`).join('');
  $('countryGrid').querySelectorAll('[data-code]').forEach(btn=>btn.addEventListener('click',()=>{const idx=teams.findIndex(t=>t.code===btn.dataset.code);if(idx>=0){selected=idx;renderPicker();}}));
  const t=currentTeam();$('chosenMain').innerHTML=`${flagImg(t,'hero-flag')}<div><strong id="chosenCountry">${escapeHTML(t.name)}</strong></div>`;
+ scrollInterfacesToTop([$('countryGrid')].filter(Boolean));
 }
 function changeConf(delta){confIndex=(confIndex+delta+confederations.length)%confederations.length;renderPicker();}
 $('prevConf').addEventListener('click',()=>changeConf(-1));$('nextConf').addEventListener('click',()=>changeConf(1));
@@ -519,7 +530,7 @@ function makeTournament(){
 }
 function beginDraw(){if(!makeTournament())return;$('home').classList.add('hidden');$('drawStage').classList.remove('hidden');$('continueDraw').classList.add('hidden');$('skipDraw').disabled=false;
  $('drawGrid').innerHTML=world.groups.map(g=>`<div class="draw-card ${g.teams.includes(world.mine)?'my-group':''}" id="draw-${g.name}"><h3>GRUPO ${g.name}</h3><div class="draw-list">${[0,1,2,3].map(i=>`<div class="draw-entry draw-slot"><span class="slot-number">${i+1}</span><span class="slot-empty">—</span></div>`).join('')}</div></div>`).join('');
- drawSequence=[];for(let p=0;p<4;p++)for(const g of world.groups)drawSequence.push({group:g,team:g.teams[p],pot:p+1});drawIndex=0;showNextDraw();
+ drawSequence=[];for(let p=0;p<4;p++)for(const g of world.groups)drawSequence.push({group:g,team:g.teams[p],pot:p+1});drawIndex=0;scrollInterfacesToTop([$('drawGrid')].filter(Boolean));showNextDraw();
 }
 function showNextDraw(){if(drawIndex>=drawSequence.length){finishDraw();return;}const item=drawSequence[drawIndex];$('drawPot').textContent='BOMBO '+item.pot+' / 4';$('drawProgress').style.width=((drawIndex+1)/48*100)+'%';
  const list=$('draw-'+item.group.name).querySelector('.draw-list');const row=list.querySelectorAll('.draw-slot')[item.pot-1];row.className='draw-entry draw-slot filled reveal';row.innerHTML=flagImg(item.team)+'<span>'+escapeHTML(item.team.name)+'</span>';drawIndex++;drawTimer=setTimeout(showNextDraw,70);
@@ -811,7 +822,7 @@ function renderStats(){
  const group=world.groups.find(g=>g.teams.includes(world.mine));
  $('gameFlag').innerHTML=flagImg(world.mine,'game-flag');$('gameTeam').textContent=world.mine.name;
 }
-function render(){renderStats();const view=$('view');if(world.screen==='match')renderMatch(view);else if(world.screen==='group-peek')renderGroupPeek(view);else if(world.screen==='group-summary')renderGroupSummary(view,false);else if(world.screen==='group-summary-final')renderGroupSummary(view,true);else if(world.screen==='bracket')renderBracket(view);else if(world.screen==='round-results')renderKnockoutResults(view);else renderFinalResult(view);}
+function render(){renderStats();const view=$('view');if(world.screen==='match')renderMatch(view);else if(world.screen==='group-peek')renderGroupPeek(view);else if(world.screen==='group-summary')renderGroupSummary(view,false);else if(world.screen==='group-summary-final')renderGroupSummary(view,true);else if(world.screen==='bracket')renderBracket(view);else if(world.screen==='round-results')renderKnockoutResults(view);else renderFinalResult(view);scrollInterfacesToTop([view]);}
 function groupRowsHTML(group,final){const rows=sorted(group),myGroup=group.teams.includes(world.mine);return `<div class="group-card ${myGroup?'my-group':''}"><h3>GRUPO ${group.name}</h3>${rows.map((x,i)=>{const pass=final&&isQualified(x.team),mine=x.team===world.mine;return `<div class="standing-row ${pass?'qualified':''} ${mine?'current-team':''}"><span class="standing-pos">${i+1}</span>${flagImg(x.team)}<span class="standing-name">${escapeHTML(x.team.name)}</span><b>${x.pts}</b>${pass?'<span class="pass-mark">✓</span>':''}</div>`;}).join('')}</div>`;}
 function renderGroupPeek(v){
  const group=world.groups.find(g=>g.teams.includes(world.mine));
@@ -1161,7 +1172,7 @@ function adminUnlock(){
  if(activeLiveTimer||drawTimer||matchControlsActive||matchPaused)return;
  adminReturnState={introHidden:$('introScreen').classList.contains('hidden'),appHidden:$('appRoot').classList.contains('hidden'),drawHidden:$('drawStage').classList.contains('hidden')};
  $('introScreen').classList.add('hidden');$('appRoot').classList.add('hidden');$('drawStage').classList.add('hidden');
- $('adminScreen').classList.remove('hidden');$('globalControls').classList.remove('hidden');setMatchControlsActive(false);updateMuteButton();renderAdminMenu();
+ $('adminScreen').classList.remove('hidden');$('globalControls').classList.remove('hidden');setMatchControlsActive(false);updateMuteButton();renderAdminMenu();scrollInterfacesToTop([document.querySelector('.admin-shell')]);
 }
 function adminClose(){
  setMatchControlsActive(false);matchPaused=false;clearMatchTimer();stopMatchSoundSources();
@@ -1175,6 +1186,7 @@ function adminClose(){
  }
  adminFriendlyMatch=null;adminReturnState=null;
  const controls=$('globalControls');if(controls)controls.classList.toggle('hidden',!$('introScreen').classList.contains('hidden'));
+ scrollInterfacesToTop();
 }
 function adminTeamOptions(){return [...teams].sort((a,b)=>a.name.localeCompare(b.name,'es')).map(t=>`<option value="${t.code}">${escapeHTML(t.name)}</option>`).join('');}
 function getAdminTeam(selectId){return teamByCode.get($(selectId).value)||teams[0];}
@@ -1203,12 +1215,14 @@ function renderAdminMenu(){
  $('adminRandom').addEventListener('click',()=>{const a=teams[Math.floor(Math.random()*teams.length)];let b=teams[Math.floor(Math.random()*teams.length)];while(b===a)b=teams[Math.floor(Math.random()*teams.length)];$('adminTeamA').value=a.code;$('adminTeamB').value=b.code;updateAdminTeamPreviews();});
  $('adminPlay').addEventListener('click',()=>startAdminFriendly('live'));
  $('adminQuick').addEventListener('click',()=>startAdminFriendly('quick'));
+ scrollInterfacesToTop([document.querySelector('.admin-shell')]);
 }
 function renderAdminFriendlyMatch(match){
  $('adminView').innerHTML=`<div class="admin-panel"><div class="admin-match-top"><strong>PARTIDO AMISTOSO</strong><button class="ghost" id="adminCancelMatch">VOLVER AL ADMIN</button></div>
   <div class="admin-match-shell"><div class="match-shell"><div class="scoreboard"><div class="team-side"><div class="team-crest">${flagImg(match.a,'match-flag')}</div><strong>${escapeHTML(match.a.name)}</strong><div class="team-highlights" id="adminHighlightsA"></div></div><div class="score-center"><div class="bigscore" id="adminLiveScore">0 – 0</div><div class="minute" id="adminLiveMinute">00:00</div></div><div class="team-side"><div class="team-crest">${flagImg(match.b,'match-flag')}</div><strong>${escapeHTML(match.b.name)}</strong><div class="team-highlights" id="adminHighlightsB"></div></div></div><div class="pitch-wrap"><div class="pitch"><div class="pitch-circle"></div><div class="pitch-line"></div><div class="event" id="adminLiveEvent"></div></div></div></div></div>
   <div class="admin-final-note" id="adminFinalNote"></div></div>`;
  $('adminCancelMatch').addEventListener('click',()=>{setMatchControlsActive(false);matchPaused=false;clearMatchTimer();stopMatchSoundSources();if(adminTimer){clearTimeout(adminTimer);adminTimer=null;}stopStadiumAmbience();renderAdminMenu();});
+ scrollInterfacesToTop([document.querySelector('.admin-shell')]);
 }
 function adminSetScore(value){const el=$('adminLiveScore');if(!el)return;el.textContent=value;el.classList.toggle('compact-score',String(value).length>=8);}
 function adminAddHighlight(side,minute,symbol,title){const target=$('adminHighlights'+(side==='a'?'A':'B'));if(!target)return;const token=document.createElement('span');token.className='highlight-token';token.textContent=String(minute)+' '+symbol;token.title=title||symbol;target.appendChild(token);}
@@ -1284,7 +1298,7 @@ $('muteGame').addEventListener('click',toggleGameMute);
 $('pauseGame').addEventListener('click',toggleMatchPause);
 updateMuteButton();
 $('startGame').addEventListener('click',()=>{$('introScreen').classList.add('hidden');$('appRoot').classList.remove('hidden');$('globalControls').classList.remove('hidden');setMatchControlsActive(false);updateMuteButton();renderPicker();});
-confIndex=confederations.findIndex(c=>c.id===currentTeam().conf);renderPicker();
+confIndex=confederations.findIndex(c=>c.id===currentTeam().conf);renderPicker();scrollInterfacesToTop();
 if(teams.length!==211||rankMap.size!==211||teams.some(t=>!rankMap.has(t.code)))throw new Error('La base de selecciones o el ranking no contiene 211 asociaciones únicas.');
 document.documentElement.dataset.worldSimReady='true';
 </script>

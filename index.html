@@ -264,7 +264,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:linear-gradient(
  <div class="admin-shell"><div id="adminView"></div></div>
 </section>
 <section id="drawStage" class="hidden" aria-live="polite">
-  <div class="draw-top"><div><div class="eyebrow">SORTEO MUNDIAL · 48 SELECCIONES</div><h2>Así se forman los grupos</h2></div><div class="confed-count" id="drawCounter">0 / 48</div></div>
+  <div class="draw-top"><div><div class="eyebrow">SORTEO MUNDIAL · 48 SELECCIONES</div><h2>Así se forman los grupos</h2></div></div>
   <div class="draw-progress-wrap"><div class="draw-progress" id="drawProgress"></div></div>
   <div class="draw-meta"><span id="drawPot">Preparando los bombos…</span><span>4 bombos · 12 grupos</span></div>
   <div class="draw-grid" id="drawGrid"></div>
@@ -512,10 +512,10 @@ function beginDraw(){if(!makeTournament())return;$('home').classList.add('hidden
  $('drawGrid').innerHTML=world.groups.map(g=>`<div class="draw-card ${g.teams.includes(world.mine)?'my-group':''}" id="draw-${g.name}"><h3>GRUPO ${g.name}</h3><div class="draw-list">${[0,1,2,3].map(i=>`<div class="draw-entry draw-slot"><span class="slot-number">${i+1}</span><span class="slot-empty">—</span></div>`).join('')}</div></div>`).join('');
  drawSequence=[];for(let p=0;p<4;p++)for(const g of world.groups)drawSequence.push({group:g,team:g.teams[p],pot:p+1});drawIndex=0;showNextDraw();
 }
-function showNextDraw(){if(drawIndex>=drawSequence.length){finishDraw();return;}const item=drawSequence[drawIndex];$('drawPot').textContent='BOMBO '+item.pot+' / 4';$('drawCounter').textContent=(drawIndex+1)+' / 48';$('drawProgress').style.width=((drawIndex+1)/48*100)+'%';
+function showNextDraw(){if(drawIndex>=drawSequence.length){finishDraw();return;}const item=drawSequence[drawIndex];$('drawPot').textContent='BOMBO '+item.pot+' / 4';$('drawProgress').style.width=((drawIndex+1)/48*100)+'%';
  const list=$('draw-'+item.group.name).querySelector('.draw-list');const row=list.querySelectorAll('.draw-slot')[item.pot-1];row.className='draw-entry draw-slot filled reveal';row.innerHTML=flagImg(item.team)+'<span>'+escapeHTML(item.team.name)+'</span>';drawIndex++;drawTimer=setTimeout(showNextDraw,70);
 }
-function finishDraw(){clearTimeout(drawTimer);drawTimer=null;$('drawPot').textContent='SORTEO LISTO';$('drawCounter').textContent='48 / 48';$('drawProgress').style.width='100%';$('drawMessage').textContent='';$('continueDraw').classList.remove('hidden');$('skipDraw').disabled=true;}
+function finishDraw(){clearTimeout(drawTimer);drawTimer=null;$('drawPot').textContent='SORTEO LISTO';$('drawProgress').style.width='100%';$('drawMessage').textContent='';$('continueDraw').classList.remove('hidden');$('skipDraw').disabled=true;}
 function skipDraw(){if(drawTimer){clearTimeout(drawTimer);drawTimer=null;}while(drawIndex<drawSequence.length){const item=drawSequence[drawIndex++];const list=$('draw-'+item.group.name).querySelector('.draw-list');const row=list.querySelectorAll('.draw-slot')[item.pot-1];row.className='draw-entry draw-slot filled';row.innerHTML=flagImg(item.team)+'<span>'+escapeHTML(item.team.name)+'</span>';}finishDraw();}
 $('begin').addEventListener('click',beginDraw);$('skipDraw').addEventListener('click',skipDraw);
 $('continueDraw').addEventListener('click',()=>{$('drawStage').classList.add('hidden');$('game').classList.remove('hidden');world.screen='match';render();});

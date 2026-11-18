@@ -603,9 +603,10 @@ function buildMatchTimeline(match){
 function simulate(match,knockout=false){
  if(match.done)return;
  // La diferencia de nivel condiciona los goles, pero conserva margen para alguna sorpresa.
+ // Calibrado para rondar 2.96 goles por partido, usando como referencia el Mundial FIFA 2026.
  const edge=clamp((matchStrength(match.a)-matchStrength(match.b))/32,-1.85,1.85);
- const lambdaA=clamp(1.55*Math.exp(edge*1.30),.20,6.4);
- const lambdaB=clamp(1.55*Math.exp(-edge*1.30),.20,6.4);
+ const lambdaA=clamp(1.20*Math.exp(edge*1.30),.20,6.4);
+ const lambdaB=clamp(1.20*Math.exp(-edge*1.30),.20,6.4);
  const regularA=Math.min(10,poisson(lambdaA)),regularB=Math.min(10,poisson(lambdaB));
  match.extraTime=!!(knockout&&regularA===regularB);
  const extraA=match.extraTime?Math.min(10-regularA,poisson(Math.max(.12,lambdaA*.25))):0;

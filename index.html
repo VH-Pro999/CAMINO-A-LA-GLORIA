@@ -553,16 +553,38 @@ function addScoringEvent(events,match,side,min,kind=randomGoalKind()){
  events.push({min,type:'goal',side,subtype:kind,msg:label,team:team.name,order:2});
 }
 function generateShootout(match){
- const shots=[],score={a:0,b:0};
+ const shots=[],score={a:0,b:0},taken={a:0,b:0};
  const chance=side=>clamp(.745+(side==='a'?matchStrength(match.a)-matchStrength(match.b):matchStrength(match.b)-matchStrength(match.a))/900,.66,.82);
- for(let round=0;round<5;round++){
-  for(const side of ['a','b']){const scored=Math.random()<chance(side);shots.push({side,scored,round:round+1});if(scored)score[side]++;}
-  const left=4-round;
-  if(score.a>score.b+left||score.b>score.a+left)break;
+ const takeShot=(side,round,suddenDeath=false)=>{
+  const scored=Math.random()<chance(side);
+  shots.push({side,scored,round,...(suddenDeath?{suddenDeath:true}:{})});
+  taken[side]++;
+  if(scored)score[side]++;
+ };
+ const decidedWinner=()=>{
+  const leftA=5-taken.a,leftB=5-taken.b;
+  if(score.a>score.b+leftB)return 'a';
+  if(score.b>score.a+leftA)return 'b';
+  return null;
+ };
+ // Ronda inicial: comprobar después de CADA lanzamiento, no después de la pareja.
+ let winner=null;
+ for(let round=1;round<=5&&!winner;round++){
+  for(const side of ['a','b']){
+   takeShot(side,round);
+   winner=decidedWinner();
+   if(winner)break;
+  }
  }
- while(score.a===score.b&&shots.length<100){for(const side of ['a','b']){const scored=Math.random()<chance(side);shots.push({side,scored,round:Math.floor(shots.length/2)+1});if(scored)score[side]++;}}
- if(score.a===score.b){const side=Math.random()<.5?'a':'b',other=side==='a'?'b':'a';shots.push({side,scored:true,round:Math.floor(shots.length/2)+1,suddenDeath:true});shots.push({side:other,scored:false,round:Math.floor(shots.length/2)+1,suddenDeath:true});score[side]++;}
- match.penA=score.a;match.penB=score.b;match.winner=score.a>score.b?match.a:match.b;return shots;
+ // Si los cinco lanzamientos por equipo no deciden la tanda, continúa la muerte súbita.
+ let round=6;
+ while(!winner){
+  takeShot('a',round,true);
+  takeShot('b',round,true);
+  if(score.a!==score.b)winner=score.a>score.b?'a':'b';
+  round++;
+ }
+ match.penA=score.a;match.penB=score.b;match.winner=winner==='a'?match.a:match.b;return shots;
 }
 function generateStoppageTime(events=[]){
  // Media base cercana a 3.9 minutos; 8–10 son poco frecuentes.
@@ -919,28 +941,76 @@ function renderMatch(v){
  $('playLive').addEventListener('click',()=>playLive(m));
  $('quickSim').addEventListener('click',()=>quickSimulatePlayerMatch(m));
 }
+const QUICK_REGULAR_DURATION_MS=1000;
+const QUICK_ADDED_DURATION_MS=200;
+function quickTimelineTiming(match){
+ const periods=[
+  {phase:'h1',start:1,end:45,added:match.stoppage1||0},
+  {phase:'h2',start:46,end:90,added:match.stoppage2||0}
+ ];
+ if(match.extraTime){
+  periods.push(
+   {phase:'et1',start:91,end:105,added:match.etStoppage1||0},
+   {phase:'et2',start:106,end:120,added:match.etStoppage2||0}
+  );
+ }
+ const regularMinutes=periods.reduce((sum,p)=>sum+p.end-p.start+1,0);
+ const addedMinutes=periods.reduce((sum,p)=>sum+p.added,0);
+ const byPhase=new Map();let cursor=0;
+ periods.forEach(period=>{
+  const minutes=period.end-period.start+1;
+  const regularDuration=QUICK_REGULAR_DURATION_MS*(minutes/regularMinutes);
+  const addedDuration=addedMinutes>0?QUICK_ADDED_DURATION_MS*(period.added/addedMinutes):0;
+  const regularEnd=cursor+regularDuration;
+  const end=regularEnd+addedDuration;
+  byPhase.set(period.phase,{...period,minutes,startMs:cursor,regularDuration,regularEndMs:regularEnd,addedDuration,endMs:end});
+  cursor=end;
+ });
+ return {byPhase,totalDuration:QUICK_REGULAR_DURATION_MS+(addedMinutes>0?QUICK_ADDED_DURATION_MS:0)};
+}
+function quickTimelineItemTime(item,timing){
+ const period=timing.byPhase.get(item.phase);
+ if(!period)return 0;
+ const label=String(item.label||'').replace(/[’']/g,'');
+ const addedMatch=label.match(/^(\d+)\+(\d+)$/);
+ if(addedMatch){
+  const addedMinute=Number(addedMatch[2]);
+  return period.regularEndMs+(period.added>0?period.addedDuration*(addedMinute/period.added):0);
+ }
+ const minute=Number(label);
+ if(!Number.isFinite(minute))return period.startMs;
+ return period.startMs+period.regularDuration*((minute-period.start+1)/period.minutes);
+}
 function quickPlaybackItems(match){
  const byTick=new Map((match.events||[]).map(event=>[event.tick,event]));
- const items=[];
+ const timing=quickTimelineTiming(match),items=[];let previousPhase=null;
  (match.timeline||[]).forEach(item=>{
-  if(item.kind==='break')items.push({kind:'break',item});
-  else{const event=byTick.get(item.tick);if(event)items.push({kind:'event',event});}
+  if(item.kind==='break'){
+   const previous=timing.byPhase.get(previousPhase);
+   items.push({kind:'break',item,elapsedMs:previous?previous.endMs:0});
+  }else{
+   const elapsedMs=quickTimelineItemTime(item,timing);
+   previousPhase=item.phase;
+   const event=byTick.get(item.tick);
+   if(event)items.push({kind:'event',event,elapsedMs});
+  }
  });
- return items;
+ return {items,totalDuration:timing.totalDuration};
 }
 function quickSimulatePlayerMatch(match){
  if(!match||match.done||activeLiveTimer)return;
  ensureMatchAudio();
- startStadiumAmbience();
  setMatchControlsActive(true);
  const quickButton=$('quickSim'),playButton=$('playLive');
  if(quickButton){quickButton.disabled=true;quickButton.textContent='SIMULANDO…';}
  if(playButton)playButton.disabled=true;
- // Primero se resuelve el partido, pero se reproduce un resumen rápido de sus
- // acciones en pantalla antes de continuar con la jornada o la ronda siguiente.
+ // Los 90 minutos (o los 120 si hay prórroga) se comprimen en 1 segundo.
+ // El añadido de todos los periodos ocupa 200 ms en total.
  simulate(match,world.phase==='knockout');
- let eventIndex=0,shotIndex=0,scoreA=0,scoreB=0,penA=0,penB=0;
- const playback=quickPlaybackItems(match);
+ let eventIndex=0,shotIndex=0,scoreA=0,scoreB=0,penA=0,penB=0,elapsedMs=0;
+ const playbackData=quickPlaybackItems(match);
+ const playback=playbackData.items;
+ const totalDuration=playbackData.totalDuration;
  const shots=match.penalties?(match.shootout||[]):[];
  function schedule(fn,delay){scheduleMatchTimer('main',fn,delay);}
  function showFinal(){
@@ -948,12 +1018,11 @@ function quickSimulatePlayerMatch(match){
   setLiveScoreText(match.penalties?matchScoreText(match):`${match.sa} – ${match.sb}`);
   $('liveMinute').textContent=match.penalties?'FINAL':matchFinalTimeText(match)+' · FINAL';
   $('liveEvent').textContent='';
-  // Deja el resultado completo visible durante 1,5 segundos antes de avanzar.
+  // Mantiene el resultado visible antes de avanzar al siguiente encuentro.
   schedule(()=>finishPlayerMatch(match),1500);
  }
  function runShootout(){
-  // La tanda empieza limpia: se borran los highlights del partido.
-  // Cada lanzamiento se añade debajo de la selección que lo ejecuta.
+  // La tanda conserva su ritmo y sus sonidos originales.
   const historyA=$('highlightsA'),historyB=$('highlightsB');
   if(historyA)historyA.replaceChildren();
   if(historyB)historyB.replaceChildren();
@@ -979,33 +1048,38 @@ function quickSimulatePlayerMatch(match){
  }
  function nextEvent(){
   if(eventIndex>=playback.length){
-   if(match.penalties){runShootout();return;}
-   showFinal();return;
+   schedule(()=>{if(match.penalties)runShootout();else showFinal();},Math.max(0,totalDuration-elapsedMs));
+   return;
   }
   const entry=playback[eventIndex++];
-  if(entry.kind==='break'){
-   $('liveMinute').textContent=entry.item.label;$('liveEvent').textContent='';
-   playPeriodWhistle();schedule(nextEvent,135);return;
-  }
-  const event=entry.event;
-  $('liveMinute').textContent=String(event.min||'');
-  $('liveEvent').textContent='';
-  playMatchEventSound(event);
-  if(event.type==='goal'){
-   if(event.side==='a')scoreA++;else scoreB++;
-   const symbol=event.subtype==='P'?'⚽ (P)':event.subtype==='GEC'?'⚽ (GEC)':'⚽';
-   addHighlight(event.side,event.min,symbol,event.msg);
-   $('liveEvent').textContent=symbol;
-  }else if(event.type==='yellow'||event.type==='secondYellow'||event.type==='red'){
-   const symbol=event.type==='secondYellow'?'🟨🟥':event.type==='yellow'?'🟨':'🟥';
-   const label=event.type==='secondYellow'?'Segunda amarilla y expulsión':event.type==='yellow'?'Tarjeta amarilla':'Tarjeta roja';
-   addHighlight(event.side,event.min,symbol,label);
-   $('liveEvent').textContent=symbol;
-  }
-  setLiveScoreText(`${scoreA} – ${scoreB}`);
-  // La simulación rápida comprime el relato: muestra cada acción brevemente,
-  // sin esperar los 90/120 minutos del modo minuto a minuto.
-  schedule(nextEvent,135);
+  const targetTime=Math.max(elapsedMs,entry.elapsedMs||0);
+  schedule(()=>{
+   elapsedMs=targetTime;
+   if(entry.kind==='break'){
+    // Se conserva el rótulo del descanso, sin añadir espera ni silbato.
+    $('liveMinute').textContent=entry.item.label;
+    $('liveEvent').textContent='';
+    nextEvent();
+    return;
+   }
+   const event=entry.event;
+   $('liveMinute').textContent=String(event.min||'');
+   $('liveEvent').textContent='';
+   // En este modo no suenan goles, tarjetas ni silbatos de descanso.
+   if(event.type==='goal'){
+    if(event.side==='a')scoreA++;else scoreB++;
+    const symbol=event.subtype==='P'?'⚽ (P)':event.subtype==='GEC'?'⚽ (GEC)':'⚽';
+    addHighlight(event.side,event.min,symbol,event.msg);
+    $('liveEvent').textContent=symbol;
+   }else if(event.type==='yellow'||event.type==='secondYellow'||event.type==='red'){
+    const symbol=event.type==='secondYellow'?'🟨🟥':event.type==='yellow'?'🟨':'🟥';
+    const label=event.type==='secondYellow'?'Segunda amarilla y expulsión':event.type==='yellow'?'Tarjeta amarilla':'Tarjeta roja';
+    addHighlight(event.side,event.min,symbol,label);
+    $('liveEvent').textContent=symbol;
+   }
+   setLiveScoreText(`${scoreA} – ${scoreB}`);
+   nextEvent();
+  },targetTime-elapsedMs);
  }
  setLiveScoreText('0 – 0');
  $('liveMinute').textContent='00:00';
@@ -1015,6 +1089,7 @@ function quickSimulatePlayerMatch(match){
  if(historyB)historyB.replaceChildren();
  nextEvent();
 }
+
 function addHighlight(side,minute,symbol,title){
  const target=$(side==='a'?'highlightsA':'highlightsB');if(!target)return;
  const token=document.createElement('span');token.className='highlight-token';
@@ -1227,8 +1302,8 @@ function renderAdminFriendlyMatch(match){
 }
 function adminSetScore(value){const el=$('adminLiveScore');if(!el)return;el.textContent=value;el.classList.toggle('compact-score',String(value).length>=8);}
 function adminAddHighlight(side,minute,symbol,title){const target=$('adminHighlights'+(side==='a'?'A':'B'));if(!target)return;const token=document.createElement('span');token.className='highlight-token';token.textContent=String(minute)+' '+symbol;token.title=title||symbol;target.appendChild(token);}
-function adminShowEvent(event,score){
- playMatchEventSound(event);
+function adminShowEvent(event,score,withSound=true){
+ if(withSound)playMatchEventSound(event);
  if(event.type==='goal'){
   const symbol=event.subtype==='P'?'⚽ (P)':event.subtype==='GEC'?'⚽ (GEC)':'⚽';adminAddHighlight(event.side,event.min,symbol,event.msg);$('adminLiveEvent').textContent=symbol;
  }else if(event.type==='yellow'||event.type==='secondYellow'||event.type==='red'){
@@ -1255,14 +1330,22 @@ function startAdminFriendly(mode){
  if(mode==='quick')runAdminQuick(match);else runAdminLive(match);
 }
 function runAdminQuick(match){
- const playback=quickPlaybackItems(match);let index=0,scoreA=0,scoreB=0;
+ const playbackData=quickPlaybackItems(match),playback=playbackData.items,totalDuration=playbackData.totalDuration;
+ let index=0,scoreA=0,scoreB=0,elapsedMs=0;
  function next(){
-  if(index>=playback.length){finishAdminFriendly(match);return;}
-  const entry=playback[index++];
-  if(entry.kind==='break'){$('adminLiveMinute').textContent=entry.item.label;$('adminLiveEvent').textContent='';playPeriodWhistle();adminSchedule(next,135);return;}
-  const event=entry.event;if(event.type==='goal'){if(event.side==='a')scoreA++;else scoreB++;}
-  adminShowEvent(event,`${scoreA} – ${scoreB}`);$('adminLiveMinute').textContent=String(event.min);
-  adminSchedule(next,135);
+  if(index>=playback.length){adminSchedule(()=>finishAdminFriendly(match),Math.max(0,totalDuration-elapsedMs));return;}
+  const entry=playback[index++],targetTime=Math.max(elapsedMs,entry.elapsedMs||0);
+  adminSchedule(()=>{
+   elapsedMs=targetTime;
+   if(entry.kind==='break'){
+    $('adminLiveMinute').textContent=entry.item.label;$('adminLiveEvent').textContent='';
+    next();return;
+   }
+   const event=entry.event;if(event.type==='goal'){if(event.side==='a')scoreA++;else scoreB++;}
+   adminShowEvent(event,`${scoreA} – ${scoreB}`,false);
+   $('adminLiveMinute').textContent=String(event.min);
+   next();
+  },targetTime-elapsedMs);
  }
  adminSetScore('0 – 0');$('adminLiveMinute').textContent='00:00';next();
 }
